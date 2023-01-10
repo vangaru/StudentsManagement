@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsManagement.Domain", "StudentsManagement.Domain\StudentsManagement.Domain.csproj", "{8BFC139D-63FC-4E5C-8091-D77F8AE8BFBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsManager.Mvc", "StudentsManager.Mvc\StudentsManager.Mvc.csproj", "{11952381-9C75-47CC-B034-60230D65BEAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsManager.Data", "StudentsManager.Data\StudentsManager.Data.csproj", "{4689C5F9-DDF5-4753-8744-08A3CE0CE59B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BFC139D-63FC-4E5C-8091-D77F8AE8BFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BFC139D-63FC-4E5C-8091-D77F8AE8BFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BFC139D-63FC-4E5C-8091-D77F8AE8BFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BFC139D-63FC-4E5C-8091-D77F8AE8BFBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11952381-9C75-47CC-B034-60230D65BEAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11952381-9C75-47CC-B034-60230D65BEAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11952381-9C75-47CC-B034-60230D65BEAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11952381-9C75-47CC-B034-60230D65BEAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4689C5F9-DDF5-4753-8744-08A3CE0CE59B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4689C5F9-DDF5-4753-8744-08A3CE0CE59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4689C5F9-DDF5-4753-8744-08A3CE0CE59B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4689C5F9-DDF5-4753-8744-08A3CE0CE59B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
