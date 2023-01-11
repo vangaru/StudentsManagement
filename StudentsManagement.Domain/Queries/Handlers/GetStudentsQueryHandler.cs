@@ -16,6 +16,6 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, IEnumer
     public Task<IEnumerable<Student>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return _studentsRepository.GetEntitiesAsync();
+        return _studentsRepository.GetEntitiesAsync(cancellationToken);
     }
 }

@@ -10,7 +10,7 @@ public class Course
 
     public string Name
     {
-        get => _name ?? throw new ApplicationException($"Field {_name} is required.");
+        get => _name ?? throw new ApplicationException($"Field Name is required in {typeof(Course)}.");
         set => _name = value;
     }
 

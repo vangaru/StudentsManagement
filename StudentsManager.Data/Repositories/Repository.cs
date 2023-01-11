@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using StudentsManagement.Domain.Repositories;
 using StudentsManager.Data.Data;
 
@@ -15,8 +16,58 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _dbSet = studentsManagementContext.Set<TEntity>();
     }
     
-    public async Task<IEnumerable<TEntity>> GetEntitiesAsync()
+    public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
     {
-        return await _dbSet.AsNoTracking().ToListAsync();
+        cancellationToken.ThrowIfCancellationRequested();
+        return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
+    }
+
+    public async Task<TEntity> GetEntityWithIncludeAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken,
+        params Expression<Func<TEntity, object>>[] includeProperties)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        IQueryable<TEntity> query = Include(includeProperties);
+        return await query.FirstAsync(entity => entity.Equals(predicate), cancellationToken);
+    }
+
+    private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
+    {
+        IQueryable<TEntity> query = _dbSet.AsNoTracking();
+        return includeProperties
+            .Aggregate(query, (current, property) => current.Include(property));
+    }
+
+    public Task<bool> ContainsEntity(TEntity entity, CancellationToken cancellationToken)
+    {
+        return _dbSet.ContainsAsync(entity, cancellationToken);
+    }
+
+    public async Task<int> DeleteEntityAsync(Guid entityId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        TEntity? entity = await _dbSet.FindAsync(entityId);
+        
+        if (entity is null)
+        {
+            throw new KeyNotFoundException($"Entity with the specified key({entityId}) is not found in the database");
+        }
+
+        _dbSet.Remove(entity);
+        return await _studentsManagementContext.SaveChangesAsync(cancellationToken);
+    }
+    
+    public async Task<int> CreateEntityAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        await _dbSet.AddAsync(entity, cancellationToken);
+        return await _studentsManagementContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<int> UpdateEntityAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        _dbSet.Update(entity);
+        return await _studentsManagementContext.SaveChangesAsync(cancellationToken);
     }
 }

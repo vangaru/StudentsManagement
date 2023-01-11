@@ -16,6 +16,6 @@ public class GetCoursesQueryHandler : IRequestHandler<GetCoursesQuery, IEnumerab
     public Task<IEnumerable<Course>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return _coursesRepository.GetEntitiesAsync();
+        return _coursesRepository.GetEntitiesAsync(cancellationToken);
     }
 }
