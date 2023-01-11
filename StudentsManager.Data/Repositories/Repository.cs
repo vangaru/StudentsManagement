@@ -19,7 +19,14 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
+        return await _dbSet.ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> GetEntityWithIncludeAsync(Expression<Func<TEntity, bool>> predicate,
@@ -36,11 +43,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         IQueryable<TEntity> query = _dbSet.AsNoTracking();
         return includeProperties
             .Aggregate(query, (current, property) => current.Include(property));
-    }
-
-    public Task<bool> ContainsEntity(TEntity entity, CancellationToken cancellationToken)
-    {
-        return _dbSet.ContainsAsync(entity, cancellationToken);
     }
 
     public async Task<int> DeleteEntityAsync(Guid entityId, CancellationToken cancellationToken)

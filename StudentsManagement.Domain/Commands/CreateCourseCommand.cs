@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using StudentsManagement.Domain.Models;
 
 namespace StudentsManagement.Domain.Commands;
 
-public record CreateCourseCommand(Course Course) : IRequest<int>;
+public record CreateCourseCommand(string CourseName, string? Description, IEnumerable<Guid> AssignedStudentsIds) : IRequest<int>;

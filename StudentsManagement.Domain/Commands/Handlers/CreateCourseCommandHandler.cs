@@ -6,16 +6,28 @@ namespace StudentsManagement.Domain.Commands.Handlers;
 
 public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, int>
 {
+    private readonly IRepository<Student> _studentsRepository;
     private readonly IRepository<Course> _coursesRepository;
 
-    public CreateCourseCommandHandler(IRepository<Course> coursesRepository)
+    public CreateCourseCommandHandler(IRepository<Course> coursesRepository, IRepository<Student> studentsRepository)
     {
         _coursesRepository = coursesRepository;
+        _studentsRepository = studentsRepository;
     }
 
-    public Task<int> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return _coursesRepository.CreateEntityAsync(request.Course, cancellationToken);
+        IEnumerable<Student> assignedStudents = await _studentsRepository
+            .GetEntitiesAsync(student => request.AssignedStudentsIds.Contains(student.Id), cancellationToken);
+        
+        var course = new Course
+        {
+            Name = request.CourseName,
+            Description = request.Description,
+            AssignedStudents = assignedStudents.ToList()
+        };
+
+        return await _coursesRepository.CreateEntityAsync(course, cancellationToken);
     }
 }

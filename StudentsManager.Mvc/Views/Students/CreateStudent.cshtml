@@ -1,0 +1,30 @@
+﻿@model CreateStudentViewModel
+
+@{
+    ViewBag.Title = "Create Student";
+    Layout = "_Layout";
+}
+
+<div>
+    <h2>Create New Student</h2>
+    <a asp-action="Index">Return to students</a>
+    <div>
+        <form method="POST" asp-action="CreateStudent">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="row checkbox-list">
+                @foreach (KeyValuePair<Guid, string> course in Model.Courses)
+                {
+                    <label>
+                        <input type="checkbox" name="SelectedCoursesIds" value="@course.Key"/>
+                        @course.Value;
+                    </label>
+                }
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+</div>

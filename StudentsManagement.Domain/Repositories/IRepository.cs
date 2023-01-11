@@ -6,6 +6,9 @@ public interface IRepository<TEntity> where TEntity : class
 {
     public Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken);
 
+    public Task<IEnumerable<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken);
+
     public Task<TEntity> GetEntityWithIncludeAsync(Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken,
         params Expression<Func<TEntity, object>>[] includeProperties);

@@ -1,16 +1,45 @@
-﻿@model IEnumerable<StudentsManagement.Domain.Models.Student>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using StudentsManagement.Domain.Models
+@model IEnumerable<StudentsManagement.Domain.Models.Student>
 
 @{
     ViewBag.Title = "Students";
     Layout = "_Layout";
 }
 
-<div>
-    <h1>Students</h1>
-    @{
-        foreach (var student in Model)
-        {
-            <p>@student</p>
-        }
-    }
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" colspan="2">
+                    <h3>Students</h3>
+                </th>
+                <th scope="col">
+                    <a asp-action="CreateStudent">Create New Student</a>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col" colspan="3">Student Name</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (Student student in Model)
+                {
+                    <tr>
+                        <td>@student.Name</td>
+                        <td>
+                            <a>Edit</a>
+                        </td>
+                        <td>
+                            <form asp-action="Delete">
+                                <input type="hidden" name="studentId" value="@student.Id" />
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
