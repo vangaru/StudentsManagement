@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using StudentsManagement.Domain.Models;
 
 namespace StudentsManagement.Domain.Commands;
 
-public record UpdateCourseCommand(Course Course) : IRequest<int>;
+public record UpdateCourseCommand(Guid CourseId, string CourseName, string? CourseDescription, IEnumerable<Guid> AssignedStudentsIds) 
+    : IRequest<int>;

@@ -35,12 +35,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         cancellationToken.ThrowIfCancellationRequested();
         IQueryable<TEntity> query = Include(includeProperties);
-        return await query.FirstAsync(entity => entity.Equals(predicate), cancellationToken);
+        return await query.FirstAsync(predicate, cancellationToken);
     }
 
     private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties)
     {
-        IQueryable<TEntity> query = _dbSet.AsNoTracking();
+        IQueryable<TEntity> query = _dbSet;
         return includeProperties
             .Aggregate(query, (current, property) => current.Include(property));
     }

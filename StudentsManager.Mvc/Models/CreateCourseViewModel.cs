@@ -14,6 +14,7 @@ public class CreateCourseViewModel
     
     public SortedList<Guid, string> Students { get; } = new();
 
+    // ReSharper disable once CollectionNeverUpdated.Global
     public List<Guid> SelectedStudentsIds { get; set; } = new();
 
     public static CreateCourseViewModel CreateInstance(IEnumerable<Student> students)

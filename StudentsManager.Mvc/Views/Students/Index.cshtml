@@ -29,11 +29,11 @@
                     <tr>
                         <td>@student.Name</td>
                         <td>
-                            <a>Edit</a>
+                            <a asp-action="Edit" asp-route-studentId="@student.Id">Edit</a>
                         </td>
                         <td>
                             <form asp-action="Delete">
-                                <input type="hidden" name="studentId" value="@student.Id" />
+                                <input type="hidden" name="studentId" value="@student.Id"/>
                                 <button type="submit" class="btn btn-link">Delete</button>
                             </form>
                         </td>
